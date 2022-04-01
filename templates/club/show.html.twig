@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Club{% endblock %}
+
+{% block body %}
+    <h1>Club</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <td>{{ club.name }}</td>
+            </tr>
+            <tr>
+                <th>Stade</th>
+                <td>{{ club.stade }}</td>
+            </tr>
+            <tr>
+                <th>Logo</th>
+                <td><img src="{{ asset('upload_directory/' ~ club.logo.name) }}" alt="{{ club.logo.alt }}"></td>
+            </tr>
+            <tr>
+                <th>Pelouse</th>
+                <td>{{ club.pelouse }}</td>
+            </tr>
+            <tr>
+                <th>Places</th>
+                <td>{{ club.places }}</td>
+            </tr>
+            <tr>
+                <th>Couverture</th>
+                <td>{{ club.couverture }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_club_index') }}">Retour à la liste</a>
+
+    <a href="{{ path('app_club_edit', {'id': club.id}) }}">Modifier</a>
+
+    {{ include('club/_delete_form.html.twig') }}
+{% endblock %}

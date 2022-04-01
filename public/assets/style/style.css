@@ -26,9 +26,6 @@ nav{
 nav img{
     width: 80px;
 }
-article{
-    margin: 0 auto;
-    width: 500px;
-    display: flex;
-    flex-direction: column;
+.logo{
+    width: 40px;
 }

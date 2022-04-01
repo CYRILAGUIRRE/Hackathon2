@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Club index{% endblock %}
+
+{% block body %}
+    <h1>Index de mon(mes) Club(s)</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Stade</th>
+                <th>Logo</th>
+                <th>Pelouse</th>
+                <th>Places</th>
+                <th>Couverture</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for club in clubs %}
+            <tr>
+                <td>{{ club.name }}</td>
+                <td>{{ club.stade }}</td>
+                <td><img class="logo" src="{{ asset('upload_directory/' ~ club.logo.name) }}" alt="{{ club.logo.alt }}"></td>
+                <td>{{ club.pelouse }}</td>
+                <td>{{ club.places }}</td>
+                <td>{{ club.couverture }}</td>
+                <td>
+                    <a href="{{ path('app_club_show', {'id': club.id}) }}">Voir le club</a>
+                    <a href="{{ path('app_club_edit', {'id': club.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Pas d'équipe enregistrée</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_club_new') }}">Créer une nouveau club</a>
+{% endblock %}
