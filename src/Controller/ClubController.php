@@ -6,6 +6,7 @@ use App\Entity\Club;
 use App\Entity\Logo;
 use App\Form\ClubType;
 use App\Repository\ClubRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,7 +49,6 @@ class ClubController extends AbstractController
             $club
                 ->setLogo($logo);
 
-
             $clubRepository->add($club);
             return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -70,10 +70,22 @@ class ClubController extends AbstractController
     #[Route('/{id}/edit', name: 'app_club_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Club $club, ClubRepository $clubRepository): Response
     {
+        $logo = new Logo();
+
         $form = $this->createForm(ClubType::class, $club);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get('logo')->getData();
+
+            $filename = md5(uniqid()) . '.' . $file->guessExtension();
+            $file->move($this->getParameter('upload_directory'), $filename);
+
+            $logo
+                ->setName($filename)
+                ->setAlt('mon logo');
+            $club
+                ->setLogo($logo);
             $clubRepository->add($club);
             return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -93,4 +105,6 @@ class ClubController extends AbstractController
 
         return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
 }

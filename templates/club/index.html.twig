@@ -5,39 +5,37 @@
 {% block body %}
     <h1>Index de mon(mes) Club(s)</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Stade</th>
-                <th>Logo</th>
-                <th>Pelouse</th>
-                <th>Places</th>
-                <th>Couverture</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
         {% for club in clubs %}
-            <tr>
-                <td>{{ club.name }}</td>
-                <td>{{ club.stade }}</td>
-                <td><img class="logo" src="{{ asset('upload_directory/' ~ club.logo.name) }}" alt="{{ club.logo.alt }}"></td>
-                <td>{{ club.pelouse }}</td>
-                <td>{{ club.places }}</td>
-                <td>{{ club.couverture }}</td>
-                <td>
+               <h2 class="clubTitle">{{ club.name }}</h2>
+            <article class="clubCard">
+                <img class="logo" src="{{ asset('upload_directory/' ~ club.logo.name) }}" alt="{{ club.logo.alt }}">
+                <div class="stade">
+                    <h3>Stade {{ club.stade }}</h3>
+                    <p> pelouse {{ club.pelouse }}</p>
+                    <p>{{ club.places }} places</p>
+                    <p>{{ club.couverture }}</p>
+                </div>
+                    <div class="teams">
+                    <h3>joueurs</h3>
+                    {% for player in club.players %}
+                    <p>{{player.lastname}} {{ player.firstname }}</p>
+                    {% endfor %}
+                    </div>
+                <div class="action">
+                    <button>
                     <a href="{{ path('app_club_show', {'id': club.id}) }}">Voir le club</a>
+                    </button>
+                    <button>
                     <a href="{{ path('app_club_edit', {'id': club.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">Pas d'équipe enregistrée</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    </button>
+                </div>
 
-    <a href="{{ path('app_club_new') }}">Créer une nouveau club</a>
+            </article>
+        {% else %}
+                <p>Pas d'équipe enregistrée</p>
+        {% endfor %}
+    <button>
+    <a href="{{ path('app_club_new') }}">Créer un nouveau club</a>
+    </button>
+
 {% endblock %}

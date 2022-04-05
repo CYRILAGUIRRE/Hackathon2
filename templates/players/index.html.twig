@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Joueurs{% endblock %}
+
+{% block body %}
+<h1>Mes joueurs</h1>
+
+    <table class="playersTable">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Equipe</th>
+                <th>Age</th>
+                <th>Taille</th>
+                <th>Nationalité</th>
+                <th>Photo</th>
+                <th>Poste préféré</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for player in players %}
+            <tr>
+                <td class="identity">{{ player.lastname }}</td>
+                <td class="identity">{{ player.firstname }}</td>
+                <td>{{ player.team.id }}</td>
+                <td>{{ player.age }} ans</td>
+                <td>{{ player.height }} cm</td>
+                <td>{{ player.nationality }}</td>
+                <td><img class="logo" src="{{ asset('upload_directory/' ~ player.photo) }}" alt=""></td>
+                <td>{{ player.preferedRole }}</td>
+                <td>
+                <button>
+                    <a href="{{ path('app_players_show', {'id': player.id}) }}">Voir le joueur</a>
+                </button>
+                <button>
+                    <a href="{{ path('app_players_edit', {'id': player.id}) }}">Modifier</a>
+                </button>
+                </td>
+            </tr>
+        {% else %}
+            <tr colspan="4"><td>Pas de joueur enregistré</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <button>
+    <a href="{{ path('app_new_players') }}">Ajouter un joueur</a>
+    </button>
+{% endblock %}

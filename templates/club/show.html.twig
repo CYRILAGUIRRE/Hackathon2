@@ -3,21 +3,28 @@
 {% block title %}Club{% endblock %}
 
 {% block body %}
+<article>
     <h1>Club</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Name</th>
+                <th>Nom</th>
                 <td>{{ club.name }}</td>
-            </tr>
-            <tr>
-                <th>Stade</th>
-                <td>{{ club.stade }}</td>
             </tr>
             <tr>
                 <th>Logo</th>
                 <td><img src="{{ asset('upload_directory/' ~ club.logo.name) }}" alt="{{ club.logo.alt }}"></td>
+            </tr>
+            <tr>
+                <th>Equipe</th>
+                {% for player in club.players %}
+                    <td>{{player.lastname}}</td>
+                    {% endfor %}
+            </tr>
+            <tr>
+                <th>Stade</th>
+                <td>{{ club.stade }}</td>
             </tr>
             <tr>
                 <th>Pelouse</th>
@@ -33,10 +40,12 @@
             </tr>
         </tbody>
     </table>
-
+<button>
     <a href="{{ path('app_club_index') }}">Retour à la liste</a>
-
+</button>
+<button>
     <a href="{{ path('app_club_edit', {'id': club.id}) }}">Modifier</a>
-
+</button>
     {{ include('club/_delete_form.html.twig') }}
+</article>
 {% endblock %}

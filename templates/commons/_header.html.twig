@@ -8,6 +8,7 @@
             {% endif %}
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <li><a href="{{ path('app_club_index') }}">Club</a></li>
+                <li><a href="{{ path('app_players_index') }}">Joueurs</a></li>
                 <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
             {% else %}
                 <li><a href="{{ path('app_login') }}">Connexion</a></li>
