@@ -1,4 +1,4 @@
 <form method="post" action="{{ path('app_players_delete', {'id': players.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer ce joueur?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ players.id) }}">
-    <button class="btn">Supprimer</button>
+    <button>Supprimer</button>
 </form>

@@ -32,7 +32,6 @@ class ClubController extends AbstractController
 
         $form = $this->createForm(ClubType::class, $club);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->get('logo')->getData();
                 #$originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
@@ -41,18 +40,14 @@ class ClubController extends AbstractController
             # Même procédure que ci-dessus mais plus rapide
                 $filename = md5(uniqid()) . '.' . $file->guessExtension();
             $file->move($this->getParameter('upload_directory'), $filename);
-          //  dd($filename);
-          //  dd($club);
             $logo
                 ->setName($filename)
                 ->setAlt('mon logo');
             $club
                 ->setLogo($logo);
-
             $clubRepository->add($club);
             return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
         }
-
         return $this->renderForm('club/new.html.twig', [
             'club' => $club,
             'form' => $form,
@@ -62,6 +57,7 @@ class ClubController extends AbstractController
     #[Route('/{id}', name: 'app_club_show', methods: ['GET'])]
     public function show(Club $club): Response
     {
+        dump($club->getPlayers());
         return $this->render('club/show.html.twig', [
             'club' => $club,
         ]);

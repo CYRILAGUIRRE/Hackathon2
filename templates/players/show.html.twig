@@ -3,50 +3,40 @@
 {% block title %}Joueur{% endblock %}
 
 {% block body %}
-    <h1>Joueur</h1>
+    <div class="showPlayer">
+        <div class="identityShow">
+            <h2>{{ players.lastname }} </h2>
+            <h2> {{ players.firstname }}</h2>
+        </div>
+            <div><img class="showImg" src="{{ asset('upload_directory/' ~ players.photo) }}" alt=""></div>
+        <div class="infoPlayers">
+            <div>
+                <h4>Age</h4>
+                <p>{{ players.age }} ans</p>
+            </div>
+            <div>
+                <h4>Taille</h4>
+                <p>{{ players.height }} cm</p>
+            </div>
+            <div>
+                <h4>Nationalité</h4>
+                <p>{{ players.nationality }}</p>
+            </div>
+            <div>
+                <h4>Poste préféré</h4>
+                <p>{{ players.preferedRole }}</p>
+            </div>
+        </div>
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <th>Nom</th>
-            <td>{{ players.lastname }}</td>
-        </tr>
-        <tr>
-            <th>Prénom</th>
-            <td>{{ players.firstname }}</td>
-        </tr>
-        <tr>
-            <th>Photo</th>
-            <td><img class="showImg" src="{{ asset('upload_directory/' ~ players.photo) }}" alt=""></td>
-        </tr>
-        <tr>
-            <th>Age</th>
-            <td>{{ players.age }} ans</td>
-        </tr>
-        <tr>
-            <th>Taille</th>
-            <td>{{ players.height }} cm</td>
-        </tr>
-        <tr>
-            <th>Nationalité</th>
-            <td>{{ players.nationality }}</td>
-        </tr>
-        <tr>
-            <th>Poste préféré</th>
-            <td>{{ players.preferedRole }}</td>
-        </tr>
-        <tr>
-        <th>Action</th>
-        <td>
-<button>    
-    <a href="{{ path('app_players_index') }}">Retour à la liste</a>
-    </button>
-<button>
-    <a href="{{ path('app_players_edit', {'id': players.id}) }}">Modifier</a>
-</button>
-    </td>
-        </tr>
-        </tbody>
-    </table>
-    {{ include('players/_delete_form.html.twig') }}
+                <h4>Actions</h4>
+            <div class="actionPlayer">
+            <button>
+                <a href="{{ path('app_players_index') }}">Retour à la liste</a>
+            </button>
+            <button>
+                <a href="{{ path('app_players_edit', {'id': players.id}) }}">Modifier</a>
+            </button>
+                {{ include('players/_delete_form.html.twig') }}
+            </div>
+    </div>
 {% endblock %}

@@ -5,47 +5,43 @@
 {% block body %}
 <article>
     <h1>Club</h1>
+        <div class="showClub">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Nom</th>
-                <td>{{ club.name }}</td>
-            </tr>
-            <tr>
-                <th>Logo</th>
-                <td><img src="{{ asset('upload_directory/' ~ club.logo.name) }}" alt="{{ club.logo.alt }}"></td>
-            </tr>
-            <tr>
-                <th>Equipe</th>
+            <div>
+                <h2>Nom</h2>
+                <p>{{ club.name }}</p>
+                <h2>Logo</h2>
+                <p><img class="showImg" src="{{ asset('upload_directory/' ~ club.logo.name) }}" alt="{{ club.logo.alt }}"></p>
+            </div>
+            <div>
+                <h2>Equipe</h2>
                 {% for player in club.players %}
-                    <td>{{player.lastname}}</td>
+                <div class="showTeam">{{player.lastname}}</div></td>
                     {% endfor %}
-            </tr>
-            <tr>
-                <th>Stade</th>
-                <td>{{ club.stade }}</td>
-            </tr>
-            <tr>
-                <th>Pelouse</th>
-                <td>{{ club.pelouse }}</td>
-            </tr>
-            <tr>
-                <th>Places</th>
-                <td>{{ club.places }}</td>
-            </tr>
-            <tr>
-                <th>Couverture</th>
-                <td>{{ club.couverture }}</td>
-            </tr>
-        </tbody>
-    </table>
-<button>
-    <a href="{{ path('app_club_index') }}">Retour à la liste</a>
-</button>
-<button>
-    <a href="{{ path('app_club_edit', {'id': club.id}) }}">Modifier</a>
-</button>
-    {{ include('club/_delete_form.html.twig') }}
+            </div>
+            <div class="stade">
+                <h2>Stade</h2>
+                <p>{{ club.stade }}</p>
+
+                <h4>Pelouse</h4>
+                <p>{{ club.pelouse }}</p>
+
+                <h4>Places</h4>
+                <p>{{ club.places }}</p>
+
+                <h4>Couverture</h4>
+                <p>{{ club.couverture }}</p>
+            </div>
+            <div class="actionClub">
+                <h2>Actions</h2>
+                <button>
+                    <a href="{{ path('app_club_index') }}">Retour à la liste</a>
+                </button>
+                <button>
+                    <a href="{{ path('app_club_edit', {'id': club.id}) }}">Modifier</a>
+                </button>
+                 {{ include('club/_delete_form.html.twig') }}
+            </div>
+        </div>
 </article>
 {% endblock %}
