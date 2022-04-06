@@ -3,11 +3,11 @@
 {% block title %}Club index{% endblock %}
 
 {% block body %}
+    <article class="club">
     <h1>Index de mon(mes) Club(s)</h1>
-
         {% for club in clubs %}
                <h2 class="clubTitle">{{ club.name }}</h2>
-            <article class="clubCard">
+            <div class="clubCard">
                 <img class="logo" src="{{ asset('upload_directory/' ~ club.logo.name) }}" alt="{{ club.logo.alt }}">
                 <div class="stade">
                     <h3>Stade {{ club.stade }}</h3>
@@ -18,7 +18,7 @@
                     <div class="teams">
                     <h3>joueurs</h3>
                     {% for player in club.players %}
-                    <p>{{player.lastname}} {{ player.firstname }}</p>
+                    <p>{{ player.firstname }} {{player.lastname}} </p>
                     {% endfor %}
                     </div>
                 <div class="action">
@@ -30,7 +30,7 @@
                     </button>
                 </div>
 
-            </article>
+            </div>
         {% else %}
                 <p>Pas d'équipe enregistrée</p>
         {% endfor %}
@@ -38,4 +38,5 @@
     <a href="{{ path('app_club_new') }}">Créer un nouveau club</a>
     </button>
 
+    </article>
 {% endblock %}

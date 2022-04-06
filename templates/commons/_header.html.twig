@@ -4,7 +4,7 @@
             <li><a href="{{ path('app_home') }}"><img src="{{ asset('assets/img/ballonbiere.jpg') }}" alt="mon logo"></a></li>
             <li><a href="{{ path('app_home') }}">Accueil</a></li>
             {% if is_granted("ROLE_ADMIN") %}
-                <li><a href="">Admin</a></li>
+                <li><a href="{{ path('admin') }}">Admin</a></li>
             {% endif %}
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <li><a href="{{ path('app_club_index') }}">Club</a></li>

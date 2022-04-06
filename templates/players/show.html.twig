@@ -3,17 +3,18 @@
 {% block title %}Joueur{% endblock %}
 
 {% block body %}
+    <div class="showPlayer">
     <h1>Joueur</h1>
 
     <table class="table">
         <tbody>
         <tr>
             <th>Nom</th>
-            <td>{{ players.lastname }}</td>
+            <td class="identity">{{ players.lastname }}</td>
         </tr>
         <tr>
             <th>Prénom</th>
-            <td>{{ players.firstname }}</td>
+            <td class="identity">{{ players.firstname }}</td>
         </tr>
         <tr>
             <th>Photo</th>
@@ -36,17 +37,20 @@
             <td>{{ players.preferedRole }}</td>
         </tr>
         <tr>
-        <th>Action</th>
-        <td>
-<button>    
-    <a href="{{ path('app_players_index') }}">Retour à la liste</a>
-    </button>
-<button>
-    <a href="{{ path('app_players_edit', {'id': players.id}) }}">Modifier</a>
-</button>
-    </td>
+            <th>Action</th>
+            <td>
+            <button>
+            <a href="{{ path('app_players_index') }}">Retour à la liste</a>
+            </button>
+            <button>
+            <a href="{{ path('app_players_edit', {'id': players.id}) }}">Modifier</a>
+            </button>
+            </td>
+            <td>
+            {{ include('players/_delete_form.html.twig') }}
+            </td>
         </tr>
         </tbody>
     </table>
-    {{ include('players/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

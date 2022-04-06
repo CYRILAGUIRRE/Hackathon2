@@ -3,6 +3,8 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body  %}
+    <section class="login">
+
 <form method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -21,10 +23,7 @@
     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
     <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
-
+           value="{{ csrf_token('authenticate') }}">
 
     <button  type="submit">
         Se connecter
@@ -32,4 +31,5 @@
 </form>
 
     <h1>Sinon enregistrez vous <a href="{{ path('app_register') }}">ici</a></h1>
+    </section>
 {% endblock %}

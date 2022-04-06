@@ -3,8 +3,9 @@
 {% block title %}Joueurs{% endblock %}
 
 {% block body %}
-<h1>Mes joueurs</h1>
+<section>
 
+<h1>Mes joueurs</h1>
     <table class="playersTable">
         <thead>
             <tr>
@@ -24,17 +25,17 @@
             <tr>
                 <td class="identity">{{ player.lastname }}</td>
                 <td class="identity">{{ player.firstname }}</td>
-                <td>{{ player.team.id }}</td>
+                <td>{{ player.team.name }}</td>
                 <td>{{ player.age }} ans</td>
                 <td>{{ player.height }} cm</td>
                 <td>{{ player.nationality }}</td>
                 <td><img class="logo" src="{{ asset('upload_directory/' ~ player.photo) }}" alt=""></td>
                 <td>{{ player.preferedRole }}</td>
                 <td>
-                <button>
+                <button class="playersTable">
                     <a href="{{ path('app_players_show', {'id': player.id}) }}">Voir le joueur</a>
                 </button>
-                <button>
+                <button class="playersTable">
                     <a href="{{ path('app_players_edit', {'id': player.id}) }}">Modifier</a>
                 </button>
                 </td>
@@ -42,9 +43,14 @@
         {% else %}
             <tr colspan="4"><td>Pas de joueur enregistré</td></tr>
         {% endfor %}
+            <tr>
+                <td>
+                <button class="playersTable">
+                <a href="{{ path('app_new_players') }}">Ajouter un joueur</a>
+                </button>
+                </td>
+            </tr>
         </tbody>
     </table>
-    <button>
-    <a href="{{ path('app_new_players') }}">Ajouter un joueur</a>
-    </button>
+</section>
 {% endblock %}
