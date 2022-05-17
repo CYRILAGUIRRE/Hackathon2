@@ -5,9 +5,16 @@
     font-family: "Agency FB";
     user-select: none;
 }
+.returnToList{
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 2px;
+    color: #FFFFFF;
+}
 a {
     text-decoration: none;
     text-transform: none;
+    padding: 4px;
 }
 li {
     list-style: none;
@@ -28,22 +35,27 @@ nav li:hover{
     align-items: center;
 }
 form {
-    margin: 0 auto;
+    margin: 20px auto;
     display: grid;
     grid-template-columns: 1fr;
-    padding: 10px;
+    padding: 20px;
     width: 60%;
     max-width: 500px;
+    background: #00000061;
+    border-radius: 20px;
 }
-form div {
+
+.registerDiv form > div:last-of-type{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
 }
 form button {
     width: 70px;
     height: 20px;
     align-items: center;
     justify-content: center;
+    border-radius: 5px;
 }
 label {
     width: 100%;
@@ -59,19 +71,26 @@ select {
 nav {
     width: 100%;
     padding: 20px 0;
-    background: dodgerblue;
+    background: none;
 }
 nav img {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 200px;
 
 }
 .logo {
-    width: 50%;
+    width: 60%;
+    min-width: 120px;
+    max-width: 140px;
+    max-height: 140px;
+    padding-left: 0.5em;
+    margin-top: 0.5em;
+
 }
 .home{
     background-image: url("http://localhost/hackathon2/public/assets/img/ballonbiere.jpg");
+    position: relative;
 }
 .home img {
     width: 100%;
@@ -79,12 +98,24 @@ nav img {
     object-fit: cover;
 }
 .home h1 {
-    text-align: center;
     text-transform: none;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+}
+.newClub{
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: 50px;
+    background: url("http://localhost/hackathon2/public/assets/img/club.jpg");
+    height: 100vh;
+    color: #FFFFFF;
 }
 .club {
     padding: 30px 0 30px;
-    background: url("http://localhost/hackathon2/public/assets/img/club.jpg") ;
+    background: url("http://localhost/hackathon2/public/assets/img/club.jpg")center/cover ;
     height: 100%;
     color: #FFFFFF;
 }
@@ -101,25 +132,86 @@ nav img {
     grid-template-columns: 20% 30% 30% 20%;
     text-transform: capitalize;
 }
+.clubCard div{
+    padding: 0.5em 0.5em;
+    margin-top: 0.5em;
+}
 .club button{
     margin-left: 10px;
+    border-radius: 5px;
 }
 .teams {
+    background: url("http://localhost/hackathon2/public/assets/img/terrain-football.png")center/cover;
+    min-width: 350px;
+    aspect-ratio:2/3;
+    text-align: center;
     display: grid;
-    grid-template-columns: 1fr;
+    align-self: center;
+    grid-template: repeat(9, 1fr) / repeat(5, 1fr);
+    color: black;
+    margin-bottom: 0.5em;
 }
+.notTitular{
+    height: 100%;
+}
+#not{
+    flex: 1;
+}
+.teamsMini{
+    display: none;
+}
+@media screen and (max-width: 700px) {
+    .teams,.notTitular{
+        display: none;
+    }
+    .teamsMini{
+        display: flex;
+        flex-direction: column;
+    }
+    .teamsMini img {
+        height: 20px;
+    }
+}
+.showTeam{
+    display: flex;
+    align-items: center;
+    font-size: 6vw;
+    justify-content: space-evenly;
+}
+.attack{
+    display: flex;
+    justify-content: space-around;
+}
+.middle{
+    display: flex;
+    justify-content: space-around;
+}
+.defense{
+    display: flex;;
+    justify-content: space-around;
+}
+
 .teams img{
     height: 20px;
     background: none;
+}
+.teamsIndex img{
+    height: 20px;
+    background: none;
+}
+.notTitular img{
+    height: 20px;
 }
 .action {
     display: flex;
     flex-direction: column;
     justify-content: end;
+    margin-top: 20px;
 }
 .action button {
     width: 70px;
     margin: 10px;
+    border-radius: 5px;
 }
 .action button a{
     text-decoration: none;
@@ -137,13 +229,14 @@ nav img {
 }
 
 article {
-    padding-left: 10px;
     background: url("http://localhost/hackathon2/public/assets/img/club.jpg") ;
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
     color: #FFFFFF;
 }
 article h1{
     font-size: 2em;
+    padding: 0.5em;
 }
 article h2{
     padding: 10px 0;
@@ -162,8 +255,9 @@ article h4{
 }
 
 .identityShow h2{
-    font-size: 5em;
-    padding: 0 20px;
+    font-size: 2.8em;
+    padding: 0 0.1em;
+
 }
 .playersTable {
     width: 100%;
@@ -176,37 +270,96 @@ article h4{
 }
 .playersTable button{
     width: 100px;
+    border-radius: 5px;
 }
 .playersTable a{
     text-decoration: none;
     color: black;
 }
+@media screen and (max-width: 700px) {
+.minSize{
+    display: none;
+}
+    .playersTable button{
+        width: 50px;
+        border-radius: 5px;
+    }
+}
 .editPlayer{
     padding: 10px 10px;
+    background: url("http://localhost/hackathon2/public/assets/img/terrain.png")center;
 }
 .return {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    width: 60%;
+    margin: 0 auto;
+    padding-bottom: 20px;
 }
 .showImg {
-    height: 100px;
+    height: 15vw;
+    max-height: 100px;
+    padding: 0.5vw;
+    border-radius:0 0 100% 100%;
 }
 .showClub{
     display: flex;
+    flex-direction: column;
+}
+.showClubInfo{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    text-transform: capitalize;
+}
+.identityClub{
+    display: flex;
     flex-direction: row;
     justify-content: space-around;
+    align-items: center;
+    font-size: 3.5vw;
+
 }
-.showTeam{
+.showTeamGoal,.showTeamAtt,.showTeamMid,.showTeamDef{
     text-transform: capitalize;
+}
+.js-area{
+    cursor: grab;
+    flex: 1;
+    min-height: 50px;
+}
+.players{
+    display: flex;
+    flex-direction: column;
+
+}
+.notTitular>div.selected{
+    outline: 2px solid green;
+}
+.js-area.selected {
+    outline: 2px solid red;
 }
 .stade{
     display: flex;
     flex-direction: column;
+    background: url("http://localhost/hackathon2/public/assets/img/stadium.jpg")center/cover;
+    width: 10em;
+    padding-left: 1.5em;
+    border-radius: 20px;
+    margin:0 0.5em;
+    margin-bottom: 0.5em;
 }
 .stade img{
     width: 40px;
+    height: 20px;
     background: none;
+}
+.teamsIndex{
+    background:#00000061 ;
+    width: 10em;
+    border-radius: 20px;
+    margin: 0 0.5em;
 }
 .actionClub{
     display: flex;
@@ -215,10 +368,12 @@ article h4{
 .actionClub form{
     margin: 0;
     padding: 0;
+    background: none;
 }
 .actionClub button{
     margin: 5px 0;
     cursor: pointer;
+    border-radius: 5px;
 }
 section{
     background: url("http://localhost/hackathon2/public/assets/img/img.png");
@@ -229,34 +384,143 @@ section{
 section h1{
     padding: 10px 10px;
 }
-.showPlayer{
-    padding: 150px 0;
-    background: url("http://localhost/hackathon2/public/assets/img/maillot-de-foot.jpg");
-    background-size: cover;
+.showPlayerContainer{
+    position: relative;
+    margin: 0 auto;
+    height: 100vh;
+    max-height: 100vw;
+    perspective: 1000px;
+    padding-top: 100px;
+    margin-bottom: 150px;
+
+}
+.showPlayerCard:hover{
+    transform: rotateY(180deg) translateX(50%);
+}
+.showPlayerCard{
+    position: absolute;
     height: 100%;
+    left: 50%;
+    aspect-ratio: 1;
+    transition: all 2s ease;
+    transform-style: preserve-3d;
+    transform: translateX(-50%);
+}
+.showPlayerFront{
+    position: absolute;
+    background: url("../img/maillots.jpg") center/cover no-repeat;
+    height: 100%;
+    width: 100%;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backface-visibility: hidden;
+    padding-top: 22vw;
+}
+.nation{
+    position: fixed;
+    top: 250px;
+    left: 420px;
+}
+.nation img{
+    height: 5vw;
+    width: 8vw;
+}
+.flag{
+    height: 6vw;
+    width: 8vw;
+}
+.showPlayerBack{
+    position: absolute;
+    background: url("../img/maillotsback.jpg") center/cover no-repeat;
+    backface-visibility: hidden;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 120px;
+    transform: rotateY(-180deg);
 }
 .infoPlayers{
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    padding: 20px;
 }
-.infoPlayers div{
-    margin: 20px;
+.divers{
+    display: flex;
+}
+
+@media screen and (max-width: 750px) {
+    .identityShow{
+        flex-wrap: wrap;
+        font-size: 0.6em;
+    }
+    .showPlayerBack{
+        padding-top: 16vw;
+    }
+    .nation{
+        position: unset;
+        padding-top: 10vw;
+        padding-left: 20vw;
+    }
+}
+@media screen and (max-width: 650px) {
+    .showPlayerBack{
+        padding-top: 16vw;
+    }
+    .clubCard{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .clubCard div{
+        padding: 0.5em 0.5em;
+    }
 }
 .actionPlayer{
-    display: flex;
-    justify-content: center;
+    width: 50%;
+    margin: 0 auto;
+    justify-items: center;
     align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 'btn1 btn2'
+    'form form' ;
+}
+
+h4{
+    min-width: 60px;
+    font-size: 1.25em;
 }
 .actionPlayer button{
     padding: 0 5px;
-    margin: 10px;
+    margin: 0 auto;
     height: 20px;
+    max-width: 100px;
+    cursor: pointer;
+}
+.btn1{
+    width: 70%;
+    grid-area: btn1;
+    min-width: 85px;
+}
+.btn2{
+    width:70%;
+    grid-area: btn2;
+    min-width: 85px;
+}
+.delete{
+    width: 35%;
+    max-width: 80px;
 }
 .actionPlayer form{
-    margin: 0;
-    width: 5%;
+    margin: 0 auto;
+    width: 100%;
+    grid-area: form;
+    background: none;
 }
 footer div{
     display: flex;
@@ -267,6 +531,7 @@ footer div{
 .login {
     text-align: center;
     padding-top: 50px;
+    height:100vh ;
 }
 .mention{
     display: flex;
@@ -277,4 +542,16 @@ footer div{
 .social a img{
     height: 30px;
     padding: 0 10px;
+}
+.register{
+    padding: 20px 40px;
+}
+.registerDiv{
+    background: url("http://localhost/hackathon2/public/assets/img/img.png");
+    background-size: cover;
+    color: #FFFFFF;
+    height: 100vh;
+}
+.newPlayer{
+    padding: 20px;
 }

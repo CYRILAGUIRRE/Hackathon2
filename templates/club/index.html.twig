@@ -15,8 +15,8 @@
                     <p>{{ club.places }} places</p>
                     <p>{{ club.couverture }}</p>
                 </div>
-                    <div class="teams">
-                    <h3>joueurs <img src="{{ asset('assets/img/logomaillot.png') }}" alt="logo de maillot"></h3>
+                    <div class="teamsIndex">
+                    <h3><img src="{{ asset('assets/img/logomaillot.png') }}" alt="logo de maillot"> joueurs </h3>
                     {% for player in club.players %}
                     <p>{{ player.firstname }} {{player.lastname}} </p>
                     {% endfor %}

@@ -6,30 +6,62 @@
 <article>
     <h1>Club</h1>
         <div class="showClub">
-
-            <div>
-                <h2>Nom</h2>
-                <p>{{ club.name }}</p>
-                <h2>Logo</h2>
-                <p><img class="showImg" src="{{ asset('upload_directory/' ~ club.logo.name) }}" alt="{{ club.logo.alt }}"></p>
+            <div class="showTeam">
+                    <p><img class="showImg" src="{{ asset('upload_directory/' ~ club.logo.name) }}" alt="{{ club.logo.alt }}"></p>
+                    <p>{{ club.name }}</p>
             </div>
-            <div>
-                <h2>Equipe</h2>
-                {% for player in club.players %}
-                <div class="showTeam">{{player.lastname}}</div></td>
+            <div class="showClubInfo">
+            <div class="teams">
+                {% for y in 1..9 %}
+                    {% for x in 1..5 %}
+                        <div class="js-area" data-x="{{ x }}" data-y="{{ y }}" style="grid-area: {{ y }} / {{ x }} / {{ y + 1 }} / {{ x + 1 }}">
+                            {% for player in club.players %}
+                                {% if player.isTitular and player.positionX == x and player.positionY == y %}
+                                    <div class="player" data-id="{{ player.id }}">
+                                        <div class="player-name">{{player.lastname}}</div>
+                                        <img class="player-img" src="{{ asset('assets/img/logomaillot.png') }}" alt="logo de maillot" />
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     {% endfor %}
+                {% endfor %}
+
+
             </div>
+
+            <div class="notTitular">
+                <h2>Remplaçants</h2>
+                <div class="js-area">
+                    {% for player in club.players %}
+                        {% if not player.isTitular or player.positionX == null or player.positionY == null %}
+                            <div class="player" data-id="{{ player.id }}">
+                                <div class="player-name">{{player.lastname}}</div>
+                                <img class="player-img" src="{{ asset('assets/img/logomaillot.png') }}" alt="logo de maillot" />
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="teamsMini">
+                <h2>Equipe <img src="{{ asset('assets/img/logomaillot.png') }}" alt="logo de maillot"></h2>
+                {% for player in club.players %}
+                <div>{{ player.lastname }}</div>
+                {% endfor %}
+            </div>
+
             <div class="stade">
-                <h2>Stade</h2>
+                <h2> Stade <img src="{{ asset('assets/img/logostade.jpg') }}" alt="logo de stade"></h2>
                 <p>{{ club.stade }}</p>
 
-                <h4>Pelouse</h4>
+                <h4>Pelouse <img src="{{ asset('assets/img/terrain.png') }}" alt="pelouse"></h4>
                 <p>{{ club.pelouse }}</p>
 
-                <h4>Places</h4>
+                <h4>Places <img src="{{ asset('assets/img/tribune.png') }}" alt="tribune"></h4>
                 <p>{{ club.places }}</p>
 
-                <h4>Couverture</h4>
+                <h4>Couverture <img src="{{ asset('assets/img/parasol.png') }}" alt="parasol"></h4>
                 <p>{{ club.couverture }}</p>
             </div>
             <div class="actionClub">
@@ -43,5 +75,103 @@
                  {{ include('club/_delete_form.html.twig') }}
             </div>
         </div>
-</article>
+        </div>
+    </article>
+
+    <script>
+        (() => {
+            const $teams = document.body.querySelector('.teams');
+            const $players = document.body.querySelectorAll('.player');
+            const $areas = document.body.querySelectorAll('.js-area');
+
+	        $players.forEach($player => {
+		        $player.addEventListener('mousedown', (event) => {
+                    const origin = { x: event.clientX, y: event.clientY };
+			        const $originArea = $player.parentElement;
+
+		            event.preventDefault();
+
+                    const moveFn = (event) => {
+                        const target = { x: event.clientX, y: event.clientY };
+
+						$areas.forEach($area => {
+							const rect = $area.getBoundingClientRect();
+							const hover = target.x >= rect.x && target.x <= rect.x + rect.width && target.y >= rect.y && target.y <= rect.y + rect.height;
+
+							hover ? $area.classList.add('selected') : $area.classList.remove('selected');
+                        })
+
+	                    $player.style.transform = `translate(${target.x - origin.x}px, ${target.y - origin.y}px)`;
+                    };
+
+                    const upFn = (event) => {
+	                    window.removeEventListener('mousemove', moveFn);
+	                    window.removeEventListener('mouseup', upFn);
+
+						$areas.forEach($area => $area.classList.remove('selected'));
+	                    $player.style.transform = `none`;
+
+	                    const target = { x: event.clientX, y: event.clientY };
+
+						for (const $area of $areas) {
+							if ($area === $player.parentElement)
+							    continue;
+
+                            const rect = $area.getBoundingClientRect();
+
+                            if (target.x >= rect.x && target.x <= rect.x + rect.width && target.y >= rect.y && target.y <= rect.y + rect.height) {
+                                const x = $area.dataset.x || null;
+                                const y = $area.dataset.y || null;
+
+                                const titulars = $teams.querySelectorAll('.player').length;
+                                const areaPlayers = $area.children.length;
+
+                                if (!$originArea.dataset.x && titulars - areaPlayers + 1 > 11) {
+                                    alert('Trop de joueurs sur le terrain');
+                                    return;
+                                }
+
+								if (x === null && titulars - 1 < 11) {
+									alert('Il manque un joueur');
+									return;
+                                }
+
+                                console.log(x, y, $player)
+                                if (x !== null && y !== null)
+                                    for (const $child of $area.children)
+                                        $originArea.appendChild($child);
+
+                                $area.appendChild($player);
+
+                                const data = {
+                                    playerId: $player.dataset.id,
+                                    x: x,
+                                    y: y
+                                }
+                                const url = `/hackathon2/public/players/updatePlayerPosition/${$player.dataset.id}`
+                                fetch(url,{
+                                    method:'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify(data)
+                                }).then( (res)=>{
+                                    console.log(res);
+                                    if(res.ok === true){
+
+                                    // }else if(response.message == ''){
+                                    // 	console.log('Error')
+                                    }
+                                })
+                                return;
+                            }
+                        }
+                    };
+
+                    window.addEventListener('mousemove', moveFn);
+                    window.addEventListener('mouseup', upFn);
+                });
+            })
+        })();
+
+    </script>
+
 {% endblock %}

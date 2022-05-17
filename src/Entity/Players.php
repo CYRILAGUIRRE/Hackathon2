@@ -37,6 +37,15 @@ class Players
     #[ORM\ManyToOne(targetEntity: Club::class, inversedBy: 'players')]
     private $team;
 
+    #[ORM\Column(type: 'boolean')]
+    private $isTitular;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $position_x;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $position_y;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -134,6 +143,42 @@ class Players
     public function setTeam(?Club $team): self
     {
         $this->team = $team;
+
+        return $this;
+    }
+
+    public function getIsTitular(): ?bool
+    {
+        return $this->isTitular;
+    }
+
+    public function setIsTitular(bool $isTitular): self
+    {
+        $this->isTitular = $isTitular;
+
+        return $this;
+    }
+
+    public function getPositionX(): ?int
+    {
+        return $this->position_x;
+    }
+
+    public function setPositionX(?int $position_x): self
+    {
+        $this->position_x = $position_x;
+
+        return $this;
+    }
+
+    public function getPositionY(): ?int
+    {
+        return $this->position_y;
+    }
+
+    public function setPositionY(?int $position_y): self
+    {
+        $this->position_y = $position_y;
 
         return $this;
     }

@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Players;
 use App\Form\PlayersType;
+use App\Form\PlayersTypeEdit;
 use App\Repository\PlayersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,11 +33,12 @@ class PlayersController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $file = $form->get('photo')->getData();
-                $filename = md5(uniqid()) . '.' . $file->guessExtension();
-            $file->move($this->getParameter('upload_directory'), $filename);
-            $players
-                ->setPhoto($filename);
+				$file = $form->get('photo')->getData();
+				$filename = md5(uniqid()) . '.' . $file->guessExtension();
+				$file->move($this->getParameter('upload_directory'), $filename);
+				$players
+					->setPhoto($filename);
+
             $playersRepository->add($players);
             return $this->redirectToRoute('app_players_index', [],Response::HTTP_SEE_OTHER);
 
@@ -52,6 +54,8 @@ class PlayersController extends AbstractController
     #[Route('/{id}', name: 'app_players_show' , methods: ['GET'])]
     public function show(Players $players): Response
     {
+		$playerss = $playersRepository->findBy(['isTitular' => 1]);
+		dd(count($playerss));
         return $this->render('players/show.html.twig', [
             'players'=>$players,
         ]);
@@ -62,17 +66,24 @@ class PlayersController extends AbstractController
     {
 
 
-        $form = $this->createForm(PlayersType::class, $players);
+        $form = $this->createForm(PlayersTypeEdit::class, $players);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $file = $form->get('photo')->getData();
-
-            $filename = md5(uniqid()) . '.' . $file->guessExtension();
-            $file->move($this->getParameter('upload_directory'), $filename);
-
-            $players
-                ->setPhoto($filename);
+		        if ($form->get('photo')->getData()) {
+			        $file = $form->get('photo')->getData();
+			        $filename = md5(uniqid()) . '.' . $file->guessExtension();
+			        $file->move($this->getParameter('upload_directory'), $filename);
+			        $players
+				        ->setPhoto($filename);
+		        }
+				if ($form->get('isTitular')->getData() == false) {
+					$players
+						->setIsTitular(false);
+				}elseif($form->get('isTitular')->getData() == true) {
+					$players
+						->setIsTitular(true);
+				}
             $playersRepository->add($players);
             return $this->redirectToRoute('app_players_index', [], Response::HTTP_SEE_OTHER);
         }

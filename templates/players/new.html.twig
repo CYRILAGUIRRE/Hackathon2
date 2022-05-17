@@ -3,9 +3,12 @@
 {% block title %}Nouveau joueur{% endblock %}
 
 {% block body %}
+    <div class="newPlayer">
+
     <h1>Ajouter un joueur</h1>
 
     {{ include('players/_form.html.twig') }}
 
-    <a href="{{ path('app_players_index') }}">Retour à la liste</a>
+    <a class="returnToList" href="{{ path('app_players_index') }}">Retour à la liste</a>
+    </div>
 {% endblock %}

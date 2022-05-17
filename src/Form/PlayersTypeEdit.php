@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Club;
 use App\Entity\Players;
 use Doctrine\ORM\EntityRepository;
+use phpDocumentor\Reflection\Types\Nullable;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -19,7 +20,7 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
 
-class PlayersType extends AbstractType
+class PlayersTypeEdit extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -66,9 +67,6 @@ class PlayersType extends AbstractType
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Ajouter une photo svp'
-                    ]),
                     new File([
                         'maxSize' => '3M',
                         'mimeTypesMessage' => 'Format invalide'
@@ -92,10 +90,9 @@ class PlayersType extends AbstractType
                 },
                 'choice_label' => 'Name'
             ])
-            ->add('isTitular', CheckboxType::class, [
+            ->add('isTitular', CheckboxType::class,  [
 				'label' => 'Titulaire',
-				'required' => false,
-	            'attr' => ['value' => 'false'],
+	            'required' => false,
             ]);
     }
 
