@@ -55,7 +55,6 @@ class PlayersController extends AbstractController
     public function show(Players $players): Response
     {
 		$playerss = $playersRepository->findBy(['isTitular' => 1]);
-		dd(count($playerss));
         return $this->render('players/show.html.twig', [
             'players'=>$players,
         ]);

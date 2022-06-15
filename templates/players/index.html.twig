@@ -15,7 +15,7 @@
                 <th class="minSize">Age</th>
                 <th class="minSize">Taille</th>
                 <th class="minSize">Nationalité</th>
-                <th>Photo</th>
+                <th class="indexPhoto">Photo</th>
                 <th class="minSize ">Poste préféré</th>
                 <th>Actions</th>
             </tr>
@@ -29,7 +29,7 @@
                 <td class="minSize">{{ player.age }} ans</td>
                 <td class="minSize">{{ player.height }} cm</td>
                 <td class="identity minSize"><img class="flag" src="https://flagcdn.com/w640/{{ player.nationality|lower }}.png" alt="{{ player.nationality }}"></td>
-                <td><img class="logo" src="{{ asset('upload_directory/' ~ player.photo) }}" alt=""></td>
+                <td class="indexPhoto"><img class="IdPhoto" src="{{ asset('upload_directory/' ~ player.photo) }}" alt=""></td>
                 <td class="minSize">{{ player.preferedRole }}</td>
                 <td>
                 <button class="playersTable">
