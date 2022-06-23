@@ -52,7 +52,7 @@ class PlayersController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_players_show' , methods: ['GET'])]
-    public function show(Players $players): Response
+    public function show(Players $players, PlayersRepository $playersRepository): Response
     {
 		$playerss = $playersRepository->findBy(['isTitular' => 1]);
         return $this->render('players/show.html.twig', [
@@ -102,4 +102,48 @@ class PlayersController extends AbstractController
 
         return $this->redirectToRoute('app_players_index', [], Response::HTTP_SEE_OTHER);
     }
+
+	#[Route('/updatePlayerPosition/{id}', name:"updatePlayerPosition", methods:["POST"])]
+	public function updatePosition(Request $request,
+	                                PlayersRepository $playersRepository)
+	{
+		$data = json_decode($request->getContent());
+		$playerId = $data->playerId;
+		$x = $data->x;
+		$y = $data->y;
+		$player = $playersRepository->findOneBy(['id' => $playerId]);
+		$playerX = $player->getPositionX();
+		$playerY = $player->getPositionY();
+		if($x && $y){
+			$doublure = $playersRepository->findOneBy(['position_x' => $x, 'position_y' => $y]);
+			if ($doublure){
+				$doublureX = $doublure->getPositionX();
+				$doublureY = $doublure->getPositionY();
+				if($doublureX && $doublureY && !$playerX && !$playerY){
+					$doublure->setIsTitular(0);
+				}
+				$doublure->setPositionX($playerX);
+				$doublure->setPositionY($playerY);
+				$playersRepository->add($doublure);
+			}
+
+			$player->setPositionX($x);
+			$player->setPositionY($y);
+			$player->setIsTitular(1);
+		}else{
+			$player->setPositionX(null);
+			$player->setPositionY(null);
+			$player->setIsTitular(0);
+		}
+		$playersRepository->add($player);
+		$titular = $playersRepository->findBy(['isTitular'=>1]);
+		$team = count($titular);
+		if ($team < 11){
+			return  new Response('Il manque un joueur sur le terrain');
+		}elseif ($team > 11){
+			return new Response('Vous avez trop de joueurs sur le terrain');
+		}else {
+			return new Response('Changement effectué', 200);
+		}
+	}
 }

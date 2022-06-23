@@ -33,9 +33,6 @@ class PlayersTypeEdit extends AbstractType
             ])
             ->add('age', IntegerType::class, [
                 'label' => 'Age',
-	            'attr' => [
-					'value' =>'20'
-		            ],
 	            'constraints' => [
 					new Range([
 						'min' => '16',
@@ -46,9 +43,6 @@ class PlayersTypeEdit extends AbstractType
             ])
             ->add('height', IntegerType::class, [
                 'label' => 'Taille',
-	            'attr' => [
-					'value' => '170'
-	            ],
 	            'constraints' => [
 					new Range([
 						'min' => 140,

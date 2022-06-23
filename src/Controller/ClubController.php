@@ -101,6 +101,4 @@ class ClubController extends AbstractController
 
         return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
     }
-
-
 }
